@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ecommerce-angular-app';
+  title = 'Tienda Virtual';
+
+  constructor(public fs: AngularFirestore){}
+  ngOnInit(){
+    this.fs.collection('test').snapshotChanges().subscribe( personas =>{
+      console.log(personas.map(x=>x.payload.doc.data()));
+    })
+  }
+
 }
